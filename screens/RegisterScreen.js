@@ -5,9 +5,11 @@ import {
   KeyboardAvoidingView,
   TextInput,
   Pressable,
+  Alert,
 } from "react-native";
 import React, { useState } from "react";
 import { useNavigation } from "@react-navigation/native";
+import axios from "axios";
 
 const RegisterScreen = () => {
   const [email, setEmail] = useState("");
@@ -15,6 +17,32 @@ const RegisterScreen = () => {
   const [name, setName] = useState("");
   const [image, setImage] = useState("");
   navigation = useNavigation();
+  const handleRegister = () => {
+    const user = {
+      name: name,
+      email: email,
+      password: password,
+      image: image,
+    };
+    axios
+      .post("http://192.168.0.104:8000/register", user)
+      .then((response) => {
+        console.log(response);
+        Alert.alert(
+          "Đăng ký thành công",
+          "Bạn đã đăng ký tài khoản thành công"
+        );
+        setName("");
+        setEmail("");
+        setPassword("");
+        setImage("");
+        navigation.navigate("Login");
+      })
+      .catch((error) => {
+        Alert.alert("Đăng ký thất bại", "Bạn đã đăng ký tài khoản thất bại");
+        console.log("Lỗi: ", error);
+      });
+  };
   return (
     <View
       style={{
@@ -106,6 +134,7 @@ const RegisterScreen = () => {
             />
           </View>
           <Pressable
+            onPress={handleRegister}
             style={{
               backgroundColor: "#4A55A2",
               padding: 14,

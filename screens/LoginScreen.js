@@ -1,14 +1,56 @@
-import { StyleSheet, Text, View } from "react-native";
-import React, { useState } from "react";
-import { KeyboardAvoidingView } from "react-native";
-import { TextInput } from "react-native";
-import { Pressable } from "react-native";
+import {
+  KeyboardAvoidingView,
+  Pressable,
+  StyleSheet,
+  Text,
+  TextInput,
+  View,
+} from "react-native";
+import React, { useState, useEffect } from "react";
 import { useNavigation } from "@react-navigation/native";
-
+import axios from "axios";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 const LoginScreen = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigation = useNavigation();
+  useEffect(() => {
+    const checkLoginStatus = async () => {
+      try {
+        const token = await AsyncStorage.getItem("authToken");
+
+        if (token) {
+          // navigation.replace("Home");
+        } else {
+          // token not found , show the login screen itself
+        }
+      } catch (error) {
+        console.log("error", error);
+      }
+    };
+
+    checkLoginStatus();
+  }, []);
+  const handleLogin = () => {
+    const user = {
+      email: email,
+      password: password,
+    };
+
+    axios
+      .post("http://192.168.0.104:8000/login", user)
+      .then((response) => {
+        console.log(response);
+        const token = response.data.token;
+        AsyncStorage.setItem("authToken", token);
+
+        navigation.navigate("Home");
+      })
+      .catch((error) => {
+        Alert.alert("Login Error", "Invalid email or password");
+        console.log("Login Error", error);
+      });
+  };
   return (
     <View
       style={{
@@ -66,6 +108,7 @@ const LoginScreen = () => {
             />
           </View>
           <Pressable
+            onPress={handleLogin}
             style={{
               backgroundColor: "#4A55A2",
               padding: 14,
