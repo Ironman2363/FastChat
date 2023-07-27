@@ -96,3 +96,30 @@ app.post("/login", (req, res) => {
       res.status(500).json({ message: "Lỗi" });
     });
 });
+
+app.get("/users/:userId", (req, res) => {
+  const loggedInUserId = req.params.userId;
+  User.find({ _id: { $ne: loggedInUserId } })
+    .then((users) => {
+      res.status(200).json(users);
+    })
+    .catch((err) => {
+      console.log("Lỗi: ", err);
+      res.status(500).json({ message: "Lỗi khi truy xuất người dùng" });
+    });
+});
+app.post("/friend-request", async (req, res) => {
+  const { currentUserId, selectedUserId } = req.body;
+  try {
+    await User.findByIdAndUpdate(selectedUserId, {
+      $push: { freindRequests: currentUserId },
+    });
+    await User.findByIdAndUpdate(currentUserId, {
+      $push: { sentFriendRequests: currentUserId },
+    });
+
+    res.sendStatus(200);
+  } catch (error) {
+    res.sendStatus(500);
+  }
+});
