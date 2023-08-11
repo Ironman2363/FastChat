@@ -61,7 +61,8 @@ const createToken = (userId) => {
   };
 
   // Tạo mã  ngẫu nhiên
-  const randomToken = createRandomToken(32); // Thay đổi độ dài thành độ dài mã thông báo mong muốn của bạn
+  const randomToken = createRandomToken(32);
+  // Thay đổi độ dài thành độ dài mã thông báo mong muốn của bạn
 
   // Tạo mã thông báo với chuỗi ngẫu nhiên và thời gian hết hạn
   const token = jwt.sign(payload, randomToken, { expiresIn: "1h" });
@@ -121,5 +122,47 @@ app.post("/friend-request", async (req, res) => {
     res.sendStatus(200);
   } catch (error) {
     res.sendStatus(500);
+  }
+});
+app.get("/friend-request/:userId", async (req, res) => {
+  try {
+    const { userId } = req.params;
+    const user = await User.findById(userId)
+      .populate("freindRequests", "name email image")
+      .lean();
+
+    const freindRequests = user.freindRequests;
+
+    res.json(freindRequests);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: "Internal Server Error" });
+  }
+});
+app.post("/friend-request/accept", async (req, res) => {
+  try {
+    const { senderId, recepientId } = req.body;
+
+    const sender = await User.findById(senderId);
+    const recepient = await User.findById(recepientId);
+
+    sender.friends.push(recepientId);
+    recepient.friends.push(senderId);
+
+    recepient.freindRequests = recepient.freindRequests.filter(
+      (request) => request.toString() !== senderId.toString()
+    );
+
+    sender.sentFriendRequests = sender.sentFriendRequests.filter(
+      (request) => request.toString() !== recepientId.toString
+    );
+
+    await sender.save();
+    await recepient.save();
+
+    res.status(200).json({ message: "Friend Request accepted successfully" });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: "Internal Server Error" });
   }
 });

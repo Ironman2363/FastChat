@@ -3,14 +3,13 @@ import {
   Text,
   View,
   KeyboardAvoidingView,
-  TextInput,
   Pressable,
   Alert,
 } from "react-native";
 import React, { useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import axios from "axios";
-
+import { TextInput } from "react-native-paper";
 const RegisterScreen = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -66,40 +65,37 @@ const RegisterScreen = () => {
         <View style={{ marginTop: 50 }}>
           <View style={{}}>
             <TextInput
+              mode="outlined"
               value={name}
               onChangeText={(text) => setName(text)}
               style={{
                 borderBottomColor: "gray",
                 height: 46,
                 fontSize: 18,
-                paddingHorizontal: 16,
-                borderWidth: 1,
-                borderRadius: 6,
                 marginHorizontal: 16,
-                opacity: 0.5,
+                opacity: 0.8,
               }}
-              placeholder="Name"
+              label="Name"
             />
           </View>
           <View style={{ marginTop: 10 }}>
             <TextInput
+              mode="outlined"
               value={email}
               onChangeText={(text) => setEmail(text)}
               style={{
                 borderBottomColor: "gray",
                 height: 46,
                 fontSize: 18,
-                paddingHorizontal: 16,
-                borderWidth: 1,
-                borderRadius: 6,
                 marginHorizontal: 16,
-                opacity: 0.5,
+                opacity: 0.8,
               }}
-              placeholder="Email"
+              label="Email"
             />
           </View>
           <View style={{ marginTop: 10 }}>
             <TextInput
+              mode="outlined"
               value={password}
               onChangeText={(text) => setPassword(text)}
               secureTextEntry={true}
@@ -107,30 +103,25 @@ const RegisterScreen = () => {
                 borderBottomColor: "gray",
                 height: 46,
                 fontSize: 18,
-                paddingHorizontal: 16,
-                borderWidth: 1,
-                borderRadius: 6,
                 marginHorizontal: 16,
-                opacity: 0.5,
+                opacity: 0.8,
               }}
-              placeholder="Password"
+              label="Password"
             />
           </View>
           <View style={{ marginTop: 10 }}>
             <TextInput
+              mode="outlined"
               value={image}
               onChangeText={(text) => setImage(text)}
               style={{
                 borderBottomColor: "gray",
                 height: 46,
                 fontSize: 18,
-                paddingHorizontal: 16,
-                borderWidth: 1,
-                borderRadius: 6,
                 marginHorizontal: 16,
-                opacity: 0.5,
+                opacity: 0.8,
               }}
-              placeholder="Image"
+              label="Image"
             />
           </View>
           <Pressable

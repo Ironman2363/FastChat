@@ -1,15 +1,16 @@
 import {
+  Alert,
   KeyboardAvoidingView,
   Pressable,
   StyleSheet,
   Text,
-  TextInput,
   View,
 } from "react-native";
 import React, { useState, useEffect } from "react";
 import { useNavigation } from "@react-navigation/native";
 import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { TextInput } from "react-native-paper";
 const LoginScreen = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -20,11 +21,12 @@ const LoginScreen = () => {
         const token = await AsyncStorage.getItem("authToken");
 
         if (token) {
-          navigation.replace("Home");
+          // navigation.replace("Home");
         } else {
           // token not found , show the login screen itself
         }
       } catch (error) {
+        
         console.log("error", error);
       }
     };
@@ -74,23 +76,24 @@ const LoginScreen = () => {
         <View style={{ marginTop: 50 }}>
           <View style={{}}>
             <TextInput
+              mode="outlined"
+              label="Email"
+              outlineStyle="focused"
               value={email}
               onChangeText={(text) => setEmail(text)}
               style={{
                 borderBottomColor: "gray",
                 height: 46,
                 fontSize: 18,
-                paddingHorizontal: 16,
-                borderWidth: 1,
-                borderRadius: 6,
                 marginHorizontal: 16,
-                opacity: 0.5,
+                opacity: 0.8,
               }}
-              placeholder="Email"
             />
           </View>
           <View style={{ marginTop: 10 }}>
             <TextInput
+              mode="outlined"
+              label="Password"
               value={password}
               onChangeText={(text) => setPassword(text)}
               secureTextEntry={true}
@@ -98,13 +101,9 @@ const LoginScreen = () => {
                 borderBottomColor: "gray",
                 height: 46,
                 fontSize: 18,
-                paddingHorizontal: 16,
-                borderWidth: 1,
-                borderRadius: 6,
                 marginHorizontal: 16,
-                opacity: 0.5,
+                opacity: 0.8,
               }}
-              placeholder="Password"
             />
           </View>
           <Pressable
