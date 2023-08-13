@@ -21,12 +21,11 @@ const LoginScreen = () => {
         const token = await AsyncStorage.getItem("authToken");
 
         if (token) {
-          // navigation.replace("Home");
+          navigation.replace("Home");
         } else {
           // token not found , show the login screen itself
         }
       } catch (error) {
-        
         console.log("error", error);
       }
     };

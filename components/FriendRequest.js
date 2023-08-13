@@ -63,7 +63,11 @@ const FriendRequest = ({ item, friendRequests, setFriendRequests }) => {
             width: 250,
           }}
         >
-          <Text style={{ textAlign: "center", color: "white",fontWeight:'bold' }}>Chấp nhận kết bạn</Text>
+          <Text
+            style={{ textAlign: "center", color: "white", fontWeight: "bold" }}
+          >
+            Chấp nhận kết bạn
+          </Text>
         </Pressable>
       </Pressable>
     </Pressable>
