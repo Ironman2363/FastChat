@@ -14,6 +14,14 @@
     "assetBundlePatterns": [
       "**/*"
     ],
+    "plugins": [
+      [
+        "expo-image-picker",
+        {
+          "photosPermission": "The app accesses your photos to let you share them with your friends."
+        }
+      ]
+    ],
     "ios": {
       "supportsTablet": true
     },
@@ -26,5 +34,22 @@
     "web": {
       "favicon": "./assets/favicon.png"
     }
-  }
+
+  },
+  "assets": [
+    {
+      "assetId": "C166F9F5-B5FE-4501-9531",
+      "base64": null,
+      "duration": null,
+      "exif": null,
+      "fileName": "IMG.HEIC",
+      "fileSize": 6018901,
+      "height": 3025,
+      "type": "image",
+      "uri": "file:///data/user/0/host.exp.exponent/cache/cropped1814158652.jpg",
+      "width": 3024
+    }
+  ],
+  "canceled": false,
+  "cancelled": false
 }
